@@ -1,7 +1,7 @@
 import { Table } from '../tables/table.interface';
 
 export interface Store {
-  id: number;
+  id?: number;
   name: string;
-  tables: Table[];
+  tables?: Table[];
 }

@@ -39,9 +39,9 @@ function StoreDetail() {
     if (storeRaw && date) {
       const store = {
         ...storeRaw,
-        tables: storeRaw.tables.map((table) => ({
+        tables: storeRaw.tables?.map((table) => ({
           ...table,
-          reservationForCurrentDate: table.reservations.find(
+          reservationForCurrentDate: table.reservations?.find(
             (reservation) => reservation.date === date
           ),
         })),
@@ -63,7 +63,7 @@ function StoreDetail() {
     <>
       <Link to="/">Back</Link>
       <h2>{store?.name}</h2>
-      {store?.tables.length === 0 ? (
+      {store?.tables?.length === 0 ? (
         <p>The store has no tables</p>
       ) : (
         <div>
@@ -79,7 +79,7 @@ function StoreDetail() {
             ))}
           </ul>
           <ul>
-            {store?.tables.map((table) => (
+            {store?.tables?.map((table) => (
               <li key={table.id}>
                 Table #{table.id} - Size {table.size}
                 {table.reservationForCurrentDate ? (
