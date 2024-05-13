@@ -10,7 +10,7 @@ const MenuIcon: FC<Props> = ({ onClick, open }) => {
   return (
     <div
       onClick={onClick}
-      className={`inline-block absolute p-4 left-0 z-10 md:hidden ${open && 'change'}`}
+      className={`inline-block absolute p-4 left-0 z-20 md:hidden ${open && 'change'}`}
     >
         <div className="bar1"></div>
         <div className="bar2"></div>

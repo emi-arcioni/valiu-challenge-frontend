@@ -8,19 +8,23 @@ function Nav() {
   const location = useLocation();
   const currentPage = location.pathname.split('/').slice(2, 3)[0];
 
-  const handleNav = useCallback(() => {
-    setNavOpen(n => !n);
+  const handleNav = useCallback((forceClose: boolean) => {
+    if (forceClose) {
+      setNavOpen(false);
+    } else {
+      setNavOpen(n => !n);
+    }
   }, []);
 
   useEffect(() => {
-    handleNav()
+    handleNav(true);
   }, [handleNav, location]);
 
   return (
     <>
-      <MenuIcon onClick={handleNav} open={navOpen} />
+      <MenuIcon onClick={() => handleNav(false)} open={navOpen} />
       <aside
-        className={`bg-gray-200 flex flex-col justify-start p-4 absolute h-screen w-64 left-0 transition duration-300 md:relative md:w-1/4 md:translate-x-0 ${
+        className={`z-10 bg-gray-200 flex flex-col justify-start p-4 absolute h-screen w-64 left-0 transition duration-300 md:relative md:w-1/4 md:translate-x-0 ${
           !navOpen && '-translate-x-full'
         }`}
       >
