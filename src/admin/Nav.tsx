@@ -24,7 +24,7 @@ function Nav() {
     <>
       <MenuIcon onClick={() => handleNav(false)} open={navOpen} />
       <aside
-        className={`z-10 bg-gray-200 flex flex-col justify-start p-4 absolute h-screen w-64 left-0 transition duration-300 md:relative md:w-1/4 md:translate-x-0 ${
+        className={`z-10 bg-gray-200 flex flex-col justify-start p-4 absolute h-full w-64 left-0 transition duration-300 md:relative md:w-1/4 md:translate-x-0 ${
           !navOpen && '-translate-x-full'
         }`}
       >
