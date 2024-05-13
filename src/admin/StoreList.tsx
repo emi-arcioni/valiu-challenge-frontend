@@ -8,18 +8,22 @@ import { Table, Tbody, Td, Th, Thead, Tr } from '../components/Table';
 import { useToast } from '../components/ToastContext';
 import { AxiosError } from 'axios';
 import Loading from '../components/Loading';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function StoreListAdmin() {
   const { callToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState<number>();
   const [stores, setStores] = useState<IStore[]>();
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchStores = useCallback(async () => {
-    const data = await getStores();
-    setStores(data);
+    const data = await getStores(page);
+    setStores((s) => (s ? [...s, ...data] : data));
+    if (!data.length) setHasMore(false);
     setLoading(false);
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     fetchStores();
@@ -57,35 +61,43 @@ function StoreListAdmin() {
       ) : stores?.length === 0 ? (
         <p>No stores were found</p>
       ) : (
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Id</Th>
-              <Th>Name</Th>
-              <Th className="w-48">Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {stores?.map((store) => (
-              <Tr key={store.id}>
-                <Td>{store.id}</Td>
-                <Td>{store.name}</Td>
-                <Td>
-                  <Link to={store.id + ''}>
-                    <Button color="green">Edit</Button>
-                  </Link>
-                  <Button
-                    color="red"
-                    onClick={() => handleDelete(store.id!)}
-                    processing={processing === store.id}
-                  >
-                    Delete
-                  </Button>
-                </Td>
+        <>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Id</Th>
+                <Th>Name</Th>
+                <Th className="w-48">Actions</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {stores?.map((store) => (
+                <Tr key={store.id}>
+                  <Td>{store.id}</Td>
+                  <Td>{store.name}</Td>
+                  <Td>
+                    <Link to={store.id + ''}>
+                      <Button color="green">Edit</Button>
+                    </Link>
+                    <Button
+                      color="red"
+                      onClick={() => handleDelete(store.id!)}
+                      processing={processing === store.id}
+                    >
+                      Delete
+                    </Button>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          <InfiniteScroll
+            dataLength={stores?.length ?? 0}
+            next={() => setPage((p) => p + 1)}
+            hasMore={hasMore}
+            loader={<Loading></Loading>}
+          > </InfiniteScroll>
+        </>
       )}
     </>
   );

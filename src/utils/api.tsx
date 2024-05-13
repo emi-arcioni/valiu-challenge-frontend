@@ -6,8 +6,8 @@ import { Reservation } from '../reservations/reservation.interface';
 const API_URL = process.env.REACT_APP_API_URL ?? '';
 
 // -- Restaurants (Stores) --
-export const getStores = async (): Promise<Store[]> => {
-  const response = await axios.get(`${API_URL}/stores`);
+export const getStores = async (page:number = 1): Promise<Store[]> => {
+  const response = await axios.get(`${API_URL}/stores?page=${page}`);
   return response.data;
 };
 
