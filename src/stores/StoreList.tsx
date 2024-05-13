@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getStores } from '../utils/api';
 import { Store as IStore } from './store.interface';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 function StoreList() {
   const [stores, setStores] = useState<IStore[]>();
@@ -17,15 +18,22 @@ function StoreList() {
 
   return (
     <>
-      <h2>Stores</h2>
+      <Header>
+        <h1>Stores</h1>
+      </Header>
+      <p className='mb-5 text-slate-500'>Please select a Store to make a reservation</p>
       {stores?.length === 0 ? (
         <p>No stores were found</p>
       ) : (
-        <ul>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {stores?.map((store) => (
-            <li key={store.id}><Link to={`/stores/${store.id}`}>{store.name}</Link></li>
+            <Link to={`/stores/${store.id}`} key={store.id}>
+              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
+                {store.name}
+              </div>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </>
   );
