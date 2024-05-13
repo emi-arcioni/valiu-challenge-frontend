@@ -34,7 +34,7 @@ function App() {
       <div className="flex flex-col h-screen">
         <div className="flex flex-1">
           {inAdmin && <Nav />}
-          <main className="flex-1 p-4">
+          <main className="flex-1 p-4 mt-12 md:mt-0">
             <Routes>
               <Route path="/" element={<StoreList />} />
               <Route path="/stores/:storeId" element={<StoreDetail />} />
