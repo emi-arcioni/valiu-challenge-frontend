@@ -21,19 +21,23 @@ function StoreList() {
       <Header>
         <h1>Stores</h1>
       </Header>
-      <p className='mb-5 text-slate-500'>Please select a Store to make a reservation</p>
       {stores?.length === 0 ? (
-        <p>No stores were found</p>
+        <p className="mb-5 text-slate-500">No stores were found</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {stores?.map((store) => (
-            <Link to={`/stores/${store.id}`} key={store.id}>
-              <div className="bg-gray-200 p-5 rounded-lg shadow-md">
-                {store.name}
-              </div>
-            </Link>
-          ))}
-        </div>
+        <>
+          <p className="mb-5 text-slate-500">
+            Please select a store to make a reservation
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {stores?.map((store) => (
+              <Link to={`/stores/${store.id}`} key={store.id}>
+                <div className="bg-gray-200 p-5 rounded-lg shadow-md">
+                  {store.name}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </>
       )}
     </>
   );

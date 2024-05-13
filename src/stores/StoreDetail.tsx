@@ -94,7 +94,7 @@ function StoreDetail() {
         </Link>
       </Header>
       {store?.tables?.length === 0 ? (
-        <p>The store has no tables</p>
+        <p className="mb-5 text-slate-500">The store has no tables</p>
       ) : (
         <div>
           <div className="grid grid-cols-5 md:grid-cols-12 gap-4">
