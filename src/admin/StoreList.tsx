@@ -10,6 +10,8 @@ import { AxiosError } from 'axios';
 import Loading from '../components/Loading';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+const ITEMS_PER_PAGE = 15;
+
 function StoreListAdmin() {
   const { callToast } = useToast();
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,11 @@ function StoreListAdmin() {
 
   const fetchStores = useCallback(async () => {
     const data = await getStores(page);
-    setStores((s) => (s ? [...s, ...data] : data));
+    setStores((s) => {
+      const ret = s && page > 1 ? [...s, ...data] : data;
+      if (ret.length < ITEMS_PER_PAGE) setHasMore(false);
+      return ret;
+    });
     if (!data.length) setHasMore(false);
     setLoading(false);
   }, [page]);
